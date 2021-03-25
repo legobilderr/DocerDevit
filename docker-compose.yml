@@ -1,0 +1,101 @@
+version: '3.7'
+
+services:
+  &php74-fpm test-php-fpm:
+    container_name: *php74-fpm
+    hostname: *php74-fpm
+    command: php-fpm
+    build: ./docker/php74
+    restart: always
+    #    links:
+    #      - mysql
+    volumes:
+      - ./www:/var/www/html
+    environment:
+      FPM_PORT: &PHP74_PORT 9000
+      FPM_USER: "${CURRENT_USER_ID}"
+      FPM_GROUP: "${CURRENT_USER_ID}"
+      CURRENT_USER: "${CURRENT_USER}"
+      SCHEDULE_PERIOD: 60
+
+    networks:
+      web:
+
+  &httpd test-httpd:
+    container_name: *httpd
+    hostname: *httpd
+    environment:
+      PHP74_HOST: *php74-fpm
+      PHP74_PORT: *PHP74_PORT
+    restart: always
+    build:
+        dockerfile: Dockerfile
+        context: ./docker/apach
+    ports:
+      - "3050:80"
+    volumes:
+      - ./www/:/var/www/html
+      - ./docker/apach/httpd.conf:/usr/local/apache2/conf/httpd.conf
+    networks:
+      web:
+
+
+
+
+
+  node:
+    restart: on-failure
+    user: "1000:1000"
+    build:
+      dockerfile: Dockerfile
+      context: ./docker/node
+    environment:
+          - NODE_ENV=production
+    networks:
+      web:
+
+
+#  phpmyadmin:
+#    image: phpmyadmin
+#    restart: always
+#    ports:
+#      - 8080:80
+#    environment:
+#      - PMA_ARBITRARY=1
+#    networks:
+#      web:
+
+  &db-service project-name-mysql:
+    container_name: *db-service
+    hostname: *db-service
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: exampledb
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_ROOT_PASSWORD: &MYSQL_ROOT_PASS examplepass5
+
+    networks:
+      web:
+
+  &pma-service project-name-phpmyadmin:
+    container_name: *pma-service
+    hostname: *pma-service
+    restart: always
+    depends_on:
+      - *db-service
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: *db-service
+      MYSQL_ROOT_PASSWORD: *MYSQL_ROOT_PASS
+      UPLOAD_LIMIT: "1G"
+
+    networks:
+      web:
+
+networks:
+  web:
