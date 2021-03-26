@@ -7,6 +7,7 @@ services:
     command: php-fpm
     build: ./docker/php74
     restart: always
+    working_dir: /var/www/html
     #    links:
     #      - mysql
     volumes:
@@ -39,10 +40,6 @@ services:
     networks:
       web:
 
-
-
-
-
   node:
     restart: on-failure
     user: "1000:1000"
@@ -51,19 +48,13 @@ services:
       context: ./docker/node
     environment:
           - NODE_ENV=production
+    working_dir: /var/www/html
+    volumes:
+      - ./www:/var/www/html:rw
+    command: "npm i && npm run build"
     networks:
       web:
 
-
-#  phpmyadmin:
-#    image: phpmyadmin
-#    restart: always
-#    ports:
-#      - 8080:80
-#    environment:
-#      - PMA_ARBITRARY=1
-#    networks:
-#      web:
 
   &db-service project-name-mysql:
     container_name: *db-service
