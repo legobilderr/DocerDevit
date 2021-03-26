@@ -18,10 +18,8 @@ services:
       FPM_GROUP: "${CURRENT_USER_ID}"
       CURRENT_USER: "${CURRENT_USER}"
       SCHEDULE_PERIOD: 60
-
     networks:
       web:
-
   &httpd test-httpd:
     container_name: *httpd
     hostname: *httpd
@@ -39,7 +37,6 @@ services:
       - ./docker/apach/httpd.conf:/usr/local/apache2/conf/httpd.conf
     networks:
       web:
-
   node:
     restart: on-failure
     user: "1000:1000"
@@ -47,15 +44,12 @@ services:
       dockerfile: Dockerfile
       context: ./docker/node
     environment:
-          - NODE_ENV=production
+      NODE_ENV: production
     working_dir: /var/www/html
     volumes:
       - ./www:/var/www/html:rw
-    command: "npm i && npm run build"
     networks:
       web:
-
-
   &db-service project-name-mysql:
     container_name: *db-service
     hostname: *db-service
@@ -67,10 +61,8 @@ services:
       MYSQL_USER: exampleuser
       MYSQL_PASSWORD: examplepass
       MYSQL_ROOT_PASSWORD: &MYSQL_ROOT_PASS examplepass5
-
     networks:
       web:
-
   &pma-service project-name-phpmyadmin:
     container_name: *pma-service
     hostname: *pma-service
@@ -84,9 +76,7 @@ services:
       PMA_HOST: *db-service
       MYSQL_ROOT_PASSWORD: *MYSQL_ROOT_PASS
       UPLOAD_LIMIT: "1G"
-
     networks:
       web:
-
 networks:
   web:

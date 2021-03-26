@@ -11,3 +11,10 @@ up: ## Start all containers (in background)
 
 down: ## Stop all started for development containers
 	$(docker_compose_bin) -f docker-compose.yml down
+
+shell-node: ## shell once node
+	$(docker_compose_bin) -f docker-compose.yml run --rm --user="1000" -p 8101:1234 "node" bash
+
+node-init: ## shell once node
+	$(docker_compose_bin) -f docker-compose.yml run --rm --user="1000" -p 8101:9229 "node" npm install
+	$(docker_compose_bin) -f docker-compose.yml run --rm --user="1000" -p 8101:9229 "node" npm run build

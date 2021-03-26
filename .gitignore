@@ -1,4 +1,7 @@
-#
+.env
+/www/node_modules
+/www/.cache
+/www/dist
 #node_modules
 #dist
 #.cache

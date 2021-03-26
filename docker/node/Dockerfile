@@ -1,3 +1,3 @@
-FROM node:15.12.0-alpine3.10
+FROM node:15.12.0
 
-RUN npm install --global pm2
+RUN npm install -g parcel-bundler
