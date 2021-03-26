@@ -1,0 +1,120 @@
+.wrapper3{
+  display: flex;
+  flex-direction: column;
+
+
+  .wrapper3-top {
+    margin: 0 auto;
+    text-align: center;
+    max-width: 500px;
+    padding-bottom: 50px;
+    .wrap3-top-text {
+
+    }
+  }
+  .wrapper3-buttom{
+    display: flex;
+
+    .rent-steps-wrapper{
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content:space-between;
+
+      .rent-steps{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 500px;
+        .button-Learn-more {
+
+          display: flex;
+          justify-content: center;
+          button {
+            color: white;
+            outline: none;
+            border: 2px solid white;
+            background: blue;
+            border-radius: 6px;
+            padding: 10px;
+            width: 150px;
+            transition: 0.3s all ease;
+
+            i {
+              transform: translateX(0);
+            }
+
+            &:hover {
+              cursor: pointer;
+              border: 2px solid #0000d4;
+              background: #0000ff;
+
+              i {
+                transition: 0.3s all ease;
+                transform: translateX(10px);
+              }
+            }
+          }
+        }
+        .step{
+          display: flex;
+
+
+          .numner-step{
+            margin-right: 20px;
+            margin-left: 20px;
+            min-width: 36px;
+            width: 36px;
+            height: 36px;
+            box-shadow: 0 10px 15px 0 rgb(21 37 71 / 15%);
+            background-color: rgba(21, 101, 216, 0.9);
+            border-radius: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+          }
+          .text-of-steps{
+            padding-left: 10px;
+
+          }
+          h2{
+            margin: 0px;
+          }
+
+
+        }
+      }
+    }
+  }
+
+  .wrapper3-buttom-buttom{
+    display: flex;
+    margin: 40px 40px 100px;
+
+    .buttom-buttom-image{
+      width: 460px;
+      height: 460px;
+
+      img{
+        width: 100%;
+        height: 100%;
+        border-radius: 0.5rem;
+      }
+    }
+    .buttom-buttom-text{
+      width: 600px;
+      padding-left: 30px;
+      i,p{
+        font-size: 40px;
+      }
+      p{
+        padding-right: 20px;
+      }
+
+      i{
+        color: #36b37e;
+      }
+    }
+  }
+}
